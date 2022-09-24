@@ -1,1 +1,28 @@
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Arrival</title>
+        <link rel="stylesheet" href="assets/style.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <br>
+        <h1>Arrival</h1>
+        <br><br><br>
+        <h2 style="text-align: center">Where do you want to go?</h2>
+        <div>
+            <form>
+              <label style="font-family: hk-grotesk; text-align: center; color: white;" for="fname">Start Destination</label>
+              <input id="start" type="text" name="firstname" placeholder="Enter place, zipcode, or address">
+          
+              <label style="font-family: hk-grotesk; text-align: center; color: white;" for="lname">End Destination</label>
+              <input id="end" type="text" name="lastname" placeholder="Enter place, zipcode, or address">
+            </form>
+            <input type="submit" value="Submit" onclick="getInput()">
+        </div>
+    <script src="js/maps.js"></script>
+    </body>
+</html>
