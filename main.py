@@ -1,2 +1,0 @@
-def he():
-    return "k"
