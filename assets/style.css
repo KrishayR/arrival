@@ -1,0 +1,53 @@
+@font-face { 
+    font-family: hk-grotesk; src: url('../hk-grotesk/HKGrotesk-Medium.otf'); 
+} 
+
+body{
+    background-image: url("bg.png");
+}
+
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: white;
+    font-size: 80px;
+}
+
+h2{
+    font-family: hk-grotesk;
+    font-style: italic;
+    color: white;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #04a0a0;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  div {
+    border-radius: 5px;
+    background-color: rgba(40, 40, 43);
+    padding: 20px;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #04a0a0;
+  }
+  
