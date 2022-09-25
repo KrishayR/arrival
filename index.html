@@ -13,17 +13,16 @@
   </head>
   <body>
     <h1>Arrival</h1>
-    <br /><br /><br />
     <h2 style="text-align: center">Where do you want to go?</h2>
     <div id="second" style="display: none;">
-      <p>Distance needed to travel: <span id="distance"> </span></p>
-      <p>Time needed to travel: <span id="duration"> </span></p>
+      <p id="disp">Distance needed to travel: <span id="distance"> </span></p>
+      <p id="durp">Time needed to travel: <span id="duration"> </span></p>
       <iframe
         id="frame"
         width="450"
         height="250"
         frameborder="0"
-        style="border:0"
+        style="border:0; display: inline-block; margin: auto;"
         referrerpolicy="no-referrer-when-downgrade"
         allowfullscreen
       >
@@ -32,6 +31,7 @@
       <script src="js/maps.js"></script>
       <!-- <iframe id="" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d101485.8392644412!2d-122.11807100915289!3d37.355942506064544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e6!4m5!1s0x808fb7a4cb6e427b%3A0xcaba2b02c88e6005!2sJuniper%20Networks%20Aspiration%20Dome%2C%20Innovation%20Way%2C%20Sunnyvale%2C%20CA!3m2!1d37.409984699999995!2d-122.0309987!4m5!1s0x808fb50f5803be31%3A0xe0e0a6aa3d42b208!2s20020%20Lynton%20Ct%2C%20Cupertino%2C%20CA%2095014!3m2!1d37.311866099999996!2d-122.02663609999999!5e0!3m2!1sen!2sus!4v1664051486809!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
     </div>
+    <h3 style="text-align: center; color: white; font-weight: bold; font-family: hk-grotesk;"id = "leaveTime"> </h3>
     <br />
     <div id="first">
       <div>
@@ -59,6 +59,23 @@
             name="lastname"
             placeholder="Enter place, zipcode, or address"
           />
+          <br>
+
+          <label 
+            style="font-family: hk-grotesk; text-align: center; color: white;"
+            for="nname"
+          > When do you want to arrive? Use Military Time in hours and minutes, with each part being 2 digits long (i.e 01, 24, etc)</label>
+          <br>
+          <input id="hour"
+            type="int"
+            name="hour"
+            placeholder="Enter hour time (Use Military Time)"/>
+          <input id="minute"
+            type="int"
+            name="minute"
+            placeholder="Enter minute time (Use Military Time)"/>
+
+
         </form>
         <input id="submit" type="submit" value="Submit" onclick="getInput()" />
       </div>
@@ -80,9 +97,10 @@
         // window.open('maps.html', '_blank');
         console.log(start);
         //   console.log("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + start + "&destinations="+ end +"&key=AIzaSyBSlzBIzOb80D8vHfZw93mBnZt5Vv2NFRQ");
-        sendRequest();
         $("#first").hide();
         $("#second").show();
+        setInterval(sendRequest(), 15000);
+
       }
 
       function sendRequest() {
@@ -103,22 +121,47 @@
             end +
             "&key=AIzaSyBSlzBIzOb80D8vHfZw93mBnZt5Vv2NFRQ"
         );
-        document.getElementById('frame').setAttribute('src', "https://www.google.com/maps/embed/v1/directions?key=AIzaSyBSlzBIzOb80D8vHfZw93mBnZt5Vv2NFRQ&origin=" +
-        start +
-        "&destination=" +
-        end);
-        console.log("https://www.google.com/maps/embed/v1/directions?key=AIzaSyBSlzBIzOb80D8vHfZw93mBnZt5Vv2NFRQ&origin=" +
-        start +
-        "&destination=" +
-        end);
+        document.getElementById('frame').setAttribute('src', "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAT1eCedVgqnFS1LKMtL9_aPqbf_uRMG24&origin=" + start + "&destination=" + end);
+        // console.log("https://www.google.com/maps/embed/v1/directions?key=AIzaSyBSlzBIzOb80D8vHfZw93mBnZt5Vv2NFRQ&origin=" +
+        // start +
+        // "&destination=" +
+        // end);
       }
 
       function getTraffic(response) {
         console.log(response);
         // $("#duration").html(response[rows[0[distance[text]])
         $("#duration").html(response.rows[0].elements[0].duration.text);
-        // $("#distance").html(response.rows.elements.distance.text);
         $("#distance").html(response.rows[0].elements[0].distance.text);
+        var hourValue = document.getElementById("hour").value;
+        var hourMinuteValue = hourValue * 60;
+        var minuteValue = document.getElementById("minute").value;
+        var finalMinCount = Number(hourMinuteValue) + Number(minuteValue);
+        response.rows[0].elements[0].duration.text = response.rows[0].elements[0].duration.text.replace(/\D/g,'');
+        var trafficHour = response.rows[0].elements[0].duration.text.slice(0,2);
+        if (response.rows[0].elements[0].duration.text == 0){
+          trafficHour = 0;
+        }
+        var trafficMinute = response.rows[0].elements[0].duration.text.slice(2,4);
+        if (response.rows[0].elements[0].duration.text == 0){
+          trafficMinute = 0;
+        }
+        console.log(trafficHour, trafficMinute);
+        console.log(finalMinCount);
+        var finalTrafficHour = trafficHour;
+        var trafficTime = Number(finalTrafficHour);
+        var timeDiff = Number(finalMinCount) - trafficTime;
+        if (timeDiff<0){
+          timeDiff
+        }
+        console.log(timeDiff);
+        var leaveHour = Math.floor(timeDiff/60);
+        var leaveMin = (Math.floor(timeDiff%60)) - 3;
+        console.log("Assuming you are driving, you should leave at " + leaveHour + ":" + leaveMin);
+        $("#leaveTime").html("Assuming you want to arrive at " + hourValue + ":" + minuteValue + ", you should leave the house at around " + leaveHour + ":" + leaveMin + ", given it takes you 3 min to leave if you want to arrive exactly on time.");
+
+        // $("#distance").html(response.rows.elements.distance.text);
+        
       }
 
       // https://www.google.com/maps/embed/v1/directions
